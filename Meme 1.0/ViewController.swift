@@ -60,7 +60,6 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     }
     
     // Mark: -- Album picker
-    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             imagePickerView.image = image
@@ -75,58 +74,11 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         }
     }
     
-    
-    /* #2 Start
-    /* Image related code  ends */
-    
-    /* textfields code */
-    func initTextField(_ textFields : [UITextField]) {
-        let memeTextAttributes: [String:Any] = [NSStrokeColorAttributeName: UIColor.black,
-                                                NSForegroundColorAttributeName: UIColor.white,
-                                                NSFontAttributeName:UIFont(name:"HelveticaNeueCondensedBlack",size:30)!,
-                                                NSStrokeWidthAttributeName: -1.0]
-        
-        for textField in textFields {
-            textField.textAlignment = .center
-            textField.delegate = self
-            textField.defaultTextAttributes = memeTextAttributes
-        }
-    }
-    
-    func showTextField(){
-        topTextField.text = "TOP"
-        bottomTextField.text = "BOTTOM"
-        topTextField.isHidden = false
-        bottomTextField.isHidden = false
-        topbuttons.isHidden = false
-    }
-    
-    func hideTextField(){
-        topTextField.isHidden = true
-        bottomTextField.isHidden = true
-        topbuttons.isHidden = true
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        textField.text = ""
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-    
-    /* Textfields related code */
-    
-    
-    // MARK: -- Keyboard observer
     func keyboardWillShow(_ notification:Notification) {
-        print("== Keyboard Show ==")
         view.frame.origin.y -= getKeyboardHeight(notification)
     }
     
     func keyboardWillHide(_ notification:Notification) {
-        print("== Keyboard Hide ==")
         view.frame.origin.y = 0
     }
     
@@ -145,6 +97,4 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
     }
-
-   #2 end */
 }
