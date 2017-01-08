@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate {
+class MemeEditViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate {
 
     // imageview
     @IBOutlet weak var imagePickerView: UIImageView!
@@ -18,16 +18,31 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     @IBOutlet weak var topTextField: UITextField!
     // Bottom_TextField
     @IBOutlet weak var bottomTextField: UITextField!
-
+   
     let memeTextAttributes : [String:Any] = [NSStrokeColorAttributeName:UIColor.black,
                                              NSForegroundColorAttributeName:UIColor.white,
-                                             NSFontAttributeName: UIFont(name: "Helvetica Neue",size:30)!,
+                                             NSFontAttributeName: UIFont(name: "HelveticaNeue-CondensedBlack",size:30)!,
                                              NSStrokeWidthAttributeName:-3]
+    
+    /* func setTextFields(textField:UITextField,text:String){
+        textField.defaultTextAttributes = memeTextAttributes
+        textField.text = text
+        textField.textAlignment = .center
+        textField.delegate = self
+    } */
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // if camera is not available diable button
         btnCamera.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
         // Text for top and bottom attribute of Meme
+        
+//        struct Meme{
+//            let top: String = ""
+//            let bottom: String = ""
+//            let image: UIImage?
+//            let memeImage: UIImage?
+//        }
         
         topTextField.defaultTextAttributes = memeTextAttributes
         topTextField.text = "TOP"
@@ -39,6 +54,16 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         bottomTextField.textAlignment = .center
         bottomTextField.delegate = self
      }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        subscribeToKeyboardNotifications()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        unsubscribeFromKeyboardNotifications()
+    }
     
     /* Image related code start */
     // Photo Album
@@ -74,12 +99,23 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         }
     }
     
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        print("editing began")
+        if textField.text == "TOP" || textField.text == "BOTTOM" {
+            textField.text = ""
+        }
+    }
+    
     func keyboardWillShow(_ notification:Notification) {
-        view.frame.origin.y -= getKeyboardHeight(notification)
+        if  bottomTextField.isFirstResponder{
+        view.frame.origin.y = getKeyboardHeight(notification) * -1
+        }
     }
     
     func keyboardWillHide(_ notification:Notification) {
+        if bottomTextField.isFirstResponder{
         view.frame.origin.y = 0
+        }
     }
     
     func getKeyboardHeight(_ notification:Notification) -> CGFloat {
@@ -90,11 +126,17 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     
     func subscribeToKeyboardNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: .UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: .UIKeyboardWillHide, object: nil)
+         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: .UIKeyboardWillShow, object: nil)
     }
     
     func unsubscribeFromKeyboardNotifications() {
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
 }
