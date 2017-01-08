@@ -29,7 +29,6 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         btnCamera.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
         // Text for top and bottom attribute of Meme
         
-        
         topTextField.defaultTextAttributes = memeTextAttributes
         topTextField.text = "TOP"
         topTextField.textAlignment = .center
@@ -39,7 +38,6 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         bottomTextField.text = "BOTTOM"
         bottomTextField.textAlignment = .center
         bottomTextField.delegate = self
-        
      }
     
     /* Image related code start */
@@ -66,7 +64,6 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             imagePickerView.image = image
-            
         }
         dismiss(animated: true, completion: nil)
     }
@@ -78,14 +75,6 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         }
     }
     
-    func textfield(){
-        topTextField.text = "TOP"
-        topTextField.backgroundColor  = UIColor.white
-        
-        bottomTextField.text = "BOTTOM"
-        bottomTextField.backgroundColor = UIColor.white
-    }
-
     
     /* #2 Start
     /* Image related code  ends */
