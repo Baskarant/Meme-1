@@ -9,7 +9,8 @@
 import UIKit
 
 class MemeEditViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate {
-
+ 
+    
     // imageview
     @IBOutlet weak var imagePickerView: UIImageView!
     // camera button
@@ -24,36 +25,22 @@ class MemeEditViewController: UIViewController,UIImagePickerControllerDelegate,U
                                              NSFontAttributeName: UIFont(name: "HelveticaNeue-CondensedBlack",size:30)!,
                                              NSStrokeWidthAttributeName:-3]
     
-    /* func setTextFields(textField:UITextField,text:String){
+     func setTextFields(textField:UITextField,text:String){
         textField.defaultTextAttributes = memeTextAttributes
         textField.text = text
         textField.textAlignment = .center
         textField.delegate = self
-    } */
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // if camera is not available diable button
         btnCamera.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
         // Text for top and bottom attribute of Meme
-        
-//        struct Meme{
-//            let top: String = ""
-//            let bottom: String = ""
-//            let image: UIImage?
-//            let memeImage: UIImage?
-//        }
-        
-        topTextField.defaultTextAttributes = memeTextAttributes
-        topTextField.text = "TOP"
-        topTextField.textAlignment = .center
-        topTextField.delegate = self
-        
-        bottomTextField.defaultTextAttributes = memeTextAttributes
-        bottomTextField.text = "BOTTOM"
-        bottomTextField.textAlignment = .center
-        bottomTextField.delegate = self
+        setTextFields(textField: topTextField, text: "TOP")
+        setTextFields(textField: bottomTextField, text: "BOTTOM")
      }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
