@@ -22,17 +22,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YKO-hF-m8w">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YKO-hF-m8w">
                                 <rect key="frame" x="0.0" y="72" width="375" height="551"/>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="kYR-yP-AdH">
-                                <rect key="frame" x="16" y="120" width="343" height="17"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="YbZ-iG-bNg">
-                                <rect key="frame" x="16" y="538" width="343" height="17"/>
+                                <rect key="frame" x="16" y="107" width="343" height="17"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
@@ -41,7 +35,11 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <items>
                                     <navigationItem title="MemeMe 1.0" id="5j7-XJ-zxd">
-                                        <barButtonItem key="leftBarButtonItem" systemItem="action" id="PRx-Qk-Bk7"/>
+                                        <barButtonItem key="leftBarButtonItem" systemItem="action" id="PRx-Qk-Bk7">
+                                            <connections>
+                                                <action selector="shareAction:" destination="BYZ-38-t0r" id="cgQ-rv-Vo9"/>
+                                            </connections>
+                                        </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" title="Cancel" id="nvd-4o-ItO"/>
                                     </navigationItem>
                                 </items>
@@ -61,6 +59,12 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="YbZ-iG-bNg">
+                                <rect key="frame" x="16" y="577" width="343" height="17"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -74,8 +78,8 @@
                             <constraint firstItem="YbZ-iG-bNg" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="VOM-Ix-FrA"/>
                             <constraint firstItem="u77-7P-4Gt" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="dXG-t9-szN"/>
                             <constraint firstItem="YbZ-iG-bNg" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="dpy-DF-2U3"/>
-                            <constraint firstItem="u77-7P-4Gt" firstAttribute="top" secondItem="YbZ-iG-bNg" secondAttribute="bottom" constant="68" id="jaT-qe-k4E"/>
-                            <constraint firstItem="kYR-yP-AdH" firstAttribute="top" secondItem="tnT-mp-PDW" secondAttribute="bottom" constant="48" id="lHa-sI-DCP"/>
+                            <constraint firstItem="u77-7P-4Gt" firstAttribute="top" secondItem="YbZ-iG-bNg" secondAttribute="bottom" constant="29" id="jaT-qe-k4E"/>
+                            <constraint firstItem="kYR-yP-AdH" firstAttribute="top" secondItem="tnT-mp-PDW" secondAttribute="bottom" constant="35" id="lHa-sI-DCP"/>
                             <constraint firstItem="kYR-yP-AdH" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="maz-az-mcT"/>
                             <constraint firstItem="YKO-hF-m8w" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="npj-Ni-sbV"/>
                             <constraint firstAttribute="trailing" secondItem="YKO-hF-m8w" secondAttribute="trailing" id="uPy-p5-WPc"/>
@@ -86,6 +90,8 @@
                         <outlet property="bottomTextField" destination="YbZ-iG-bNg" id="P6x-QF-q0r"/>
                         <outlet property="btnCamera" destination="zCo-Lq-NXf" id="QYv-px-3I4"/>
                         <outlet property="imagePickerView" destination="YKO-hF-m8w" id="aSs-ak-ns7"/>
+                        <outlet property="navBar" destination="tnT-mp-PDW" id="VjV-rR-k4r"/>
+                        <outlet property="toolBar" destination="u77-7P-4Gt" id="ioj-5y-8U7"/>
                         <outlet property="topTextField" destination="kYR-yP-AdH" id="9S1-64-cCM"/>
                     </connections>
                 </viewController>

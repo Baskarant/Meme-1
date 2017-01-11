@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MemeEditViewController.swift
 //  Meme 1.0
 //
 //  Created by Baskaran T on 05/01/17.
@@ -9,8 +9,7 @@
 import UIKit
 
 class MemeEditViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate {
- 
-    
+
     // imageview
     @IBOutlet weak var imagePickerView: UIImageView!
     // camera button
@@ -19,38 +18,46 @@ class MemeEditViewController: UIViewController,UIImagePickerControllerDelegate,U
     @IBOutlet weak var topTextField: UITextField!
     // Bottom_TextField
     @IBOutlet weak var bottomTextField: UITextField!
-   
+    // Navigation bar
+    @IBOutlet weak var navBar: UINavigationBar!
+    // Toolbar
+    @IBOutlet weak var toolBar: UIToolbar!
+    
+    var memedImage: UIImage!
+    
     let memeTextAttributes : [String:Any] = [NSStrokeColorAttributeName:UIColor.black,
                                              NSForegroundColorAttributeName:UIColor.white,
                                              NSFontAttributeName: UIFont(name: "HelveticaNeue-CondensedBlack",size:30)!,
                                              NSStrokeWidthAttributeName:-3]
     
-     func setTextFields(textField:UITextField,text:String){
+    func setTextFields(textField:UITextField,text:String){
         textField.defaultTextAttributes = memeTextAttributes
         textField.text = text
         textField.textAlignment = .center
         textField.delegate = self
     }
     
-    override func viewDidLoad() {
+        override func viewDidLoad() {
         super.viewDidLoad()
-        // if camera is not available diable button
-        btnCamera.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
         // Text for top and bottom attribute of Meme
+        // text field with default name
         setTextFields(textField: topTextField, text: "TOP")
         setTextFields(textField: bottomTextField, text: "BOTTOM")
      }
     
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        // if camera is not available diable button
+        btnCamera.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
+        // keyboard
         subscribeToKeyboardNotifications()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        //keyboard
         unsubscribeFromKeyboardNotifications()
-    }
+    }    
     
     /* Image related code start */
     // Photo Album
@@ -79,13 +86,47 @@ class MemeEditViewController: UIViewController,UIImagePickerControllerDelegate,U
         dismiss(animated: true, completion: nil)
     }
     
+    // Dismiss imagepicker
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
-        if imagePickerView.image == nil {
-            
-        }
     }
     
+    /* Share Action  */
+    @IBAction func shareAction(_ sender: UIBarButtonItem) {
+        memedImage = generateMemedImage()
+        let activityController = UIActivityViewController(activityItems: [memedImage], applicationActivities: nil)
+        activityController.completionWithItemsHandler = { activity, success, items, error in
+            self.saveMeme()
+            self.dismiss(animated: true, completion: nil)
+        }
+        present(activityController, animated: true, completion: nil)
+    
+    }
+    
+    func saveMeme(){
+        let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, image: imagePickerView.image!, memedImage: memedImage)
+        print(meme.bottomText)
+    }
+    
+    func generateMemedImage() -> UIImage {
+        // Hiding Nav and Tool bar
+        navBar.isHidden = true
+        toolBar.isHidden = true
+        
+        // Render view to an image
+        UIGraphicsBeginImageContext(view.frame.size)
+        view.drawHierarchy(in: view.frame, afterScreenUpdates: true)
+        let memedImage : UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        
+        // show nav & toolbar
+        navBar.isHidden = false
+        toolBar.isHidden = false
+        
+        return memedImage
+    }
+    
+    // always text begin with
     func textFieldDidBeginEditing(_ textField: UITextField) {
         print("editing began")
         if textField.text == "TOP" || textField.text == "BOTTOM" {
@@ -93,27 +134,15 @@ class MemeEditViewController: UIViewController,UIImagePickerControllerDelegate,U
         }
     }
     
-    func keyboardWillShow(_ notification:Notification) {
-        if  bottomTextField.isFirstResponder{
-        view.frame.origin.y = getKeyboardHeight(notification) * -1
-        }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
-    func keyboardWillHide(_ notification:Notification) {
-        if bottomTextField.isFirstResponder{
-        view.frame.origin.y = 0
-        }
-    }
-    
-    func getKeyboardHeight(_ notification:Notification) -> CGFloat {
-        let userInfo = notification.userInfo
-        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
-        return keyboardSize.cgRectValue.height
-    }
-    
+    /* Keyboard Function */
     func subscribeToKeyboardNotifications() {
-         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: .UIKeyboardWillShow, object: nil)
-         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: .UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: .UIKeyboardWillHide, object: nil)
     }
     
     func unsubscribeFromKeyboardNotifications() {
@@ -121,9 +150,24 @@ class MemeEditViewController: UIViewController,UIImagePickerControllerDelegate,U
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
+    func keyboardWillShow(_ notification:Notification) {
+        if  bottomTextField.isFirstResponder{
+        view.frame.origin.y = getKeyboardHeight(notification) * -1
+            print(view.frame.origin.y)
+        }
+    }
+    
+    func keyboardWillHide(_ notification:Notification) {
+        if bottomTextField.isFirstResponder{
+        view.frame.origin.y = 0
+            print(view.frame.origin.y)
+        }
+    }
+    
+    func getKeyboardHeight(_ notification:Notification) -> CGFloat {
+        let userInfo = notification.userInfo
+        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
+        return keyboardSize.cgRectValue.height
     }
     
 }
