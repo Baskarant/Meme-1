@@ -43,6 +43,10 @@ class MemeEditViewController: UIViewController,UIImagePickerControllerDelegate,U
         // text field with default name
         setTextFields(textField: topTextField, text: "TOP")
         setTextFields(textField: bottomTextField, text: "BOTTOM")
+            
+        // code for Meme 2.0 to hidden navigation and tab bar
+            self.navigationController?.navigationBar.isHidden = true
+            self.tabBarController?.tabBar.isHidden = true
      }
     
     override func viewWillAppear(_ animated: Bool) {
