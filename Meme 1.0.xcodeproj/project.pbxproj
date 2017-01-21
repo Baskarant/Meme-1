@@ -62,9 +62,7 @@
 		6EBFDEAA1E1EB86800E5A9E2 /* Meme 1.0 */ = {
 			isa = PBXGroup;
 			children = (
-				6EBFDEAD1E1EB86800E5A9E2 /* ViewController.swift */,
-				6482A3901E249F1B00314605 /* Meme.swift */,
-				6EBFDEAF1E1EB86800E5A9E2 /* Main.storyboard */,
+				6EF82F271E3329B400C1BB46 /* Main */,
 				6EF82F221E331C1C00C1BB46 /* Collection */,
 				6EF82F1F1E331BE100C1BB46 /* Table */,
 				6EBFDEBD1E1EB87900E5A9E2 /* Supporting Files */,
@@ -98,6 +96,16 @@
 				6EF82F251E331C4B00C1BB46 /* MemeCollectionViewCell.swift */,
 			);
 			name = Collection;
+			sourceTree = "<group>";
+		};
+		6EF82F271E3329B400C1BB46 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				6EBFDEAD1E1EB86800E5A9E2 /* ViewController.swift */,
+				6482A3901E249F1B00314605 /* Meme.swift */,
+				6EBFDEAF1E1EB86800E5A9E2 /* Main.storyboard */,
+			);
+			name = Main;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
